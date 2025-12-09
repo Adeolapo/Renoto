@@ -9,7 +9,7 @@ const Detail = () => {
 
     const {id} = useParams();
 
-    const [edit, setEdit] = useState<boolean>(true);
+    const [edit, _setEdit] = useState<boolean>(true);
     const [noteTitle, setNoteTitle] = useState<string>("");
     const [noteContent, setNoteContent] = useState<string>("");
     const [newNoteTitle, setNewNoteTitle] = useState<string>("");

@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import MyContext from "@/context"
 import React, { useContext } from "react"
-import { addDoc, collection, doc, setDoc } from "firebase/firestore"; 
+import { addDoc, collection} from "firebase/firestore"; 
 import { db } from "@/firebase"
 
 

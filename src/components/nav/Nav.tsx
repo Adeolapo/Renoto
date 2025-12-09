@@ -1,5 +1,5 @@
 
-import { NavLink } from "react-router";
+
 import { Link } from "react-router";
 
 const Nav = () => {
@@ -28,7 +28,7 @@ const Nav = () => {
             >
                 ⏰
             </button>
-</div>
+        </div>
 
         </div>
     )
