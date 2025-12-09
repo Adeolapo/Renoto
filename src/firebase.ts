@@ -7,8 +7,9 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const apiKey = import.meta.env.VITE_API_KEY;
 const firebaseConfig = {
-  apiKey: "AIzaSyDzkguOjTxO5DMWa4qIg4li-_Kxwm_h6lI",
+  apiKey: apiKey,
   authDomain: "renoto-9be37.firebaseapp.com",
   projectId: "renoto-9be37",
   storageBucket: "renoto-9be37.firebasestorage.app",
