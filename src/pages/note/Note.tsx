@@ -115,19 +115,19 @@ const Note = () => {
         
                     </div>
                    
-                    <div className="w-full h-[75vh] bg-secondaryy  md:px-[80px] px-[32px] p-4 overflow-y-auto pt-8 relative">
+                    <div className="w-full h-[75vh] bg-secondaryy  md:px-[80px] px-[32px] m-auto  overflow-y-auto pt-8 relative">
 
                       <Modal /> 
                       
                       <Masonry
                       breakpointCols={breakpoints}
-                      className="flex gap-4"
-                      columnClassName="flex flex-col gap-4"
+                      className="flex gap-4  max-w-[95%] "
+                      columnClassName="flex flex-col  gap-4"
                       >
 
                         {filterState.map((noteItem, index) => (
                             
-                            <div key={noteItem.id} className={` relative md:w-[300px] w-[130px] p-4 rounded-xl `} style={{ backgroundColor: `${noteItem.color}`, height: `${height[index]}px` }}>
+                            <div key={noteItem.id} className={` relative md:w-auto w-auto p-4 rounded-xl `} style={{ backgroundColor: `${noteItem.color}`, height: `${height[index]}px` }}>
                                 <Link to={`/note/${noteItem.id}`} key={noteItem.id}>
                                     <div className="w-full h-[80%] ">
                                         <h1 className="text-[16px] md:text-[24px] mb-2 font-bold line-clamp-1 text-blackk ">{noteItem.name}</h1>

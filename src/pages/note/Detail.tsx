@@ -75,7 +75,7 @@ const Detail = () => {
                 {noteContent}
                 
             </div>
-            <button onClick={handleEdit} className="md:px-[32px] md:py-[16px] px-[24px] py-[12px] bg-primaryy rounded-full fixed bottom-5 right-8 "><p className="text-blackk text-[14px] font-semibold ">Save changes</p></button>
+            <button onClick={handleEdit} className="md:px-[32px] md:py-[16px] px-[24px] py-[12px] bg-primaryy rounded-full fixed bottom-[120px] right-8 "><p className="text-blackk text-[14px] font-semibold ">Save changes</p></button>
         </div>
     )
 }
