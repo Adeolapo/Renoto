@@ -74,7 +74,7 @@ const Detail = () => {
             contentEditable={edit}
             suppressContentEditableWarning 
             onInput={handleInputC}
-             className="min-h-[90%]  w-full pt-4 break-words whitespace-pre-wrap  focus:outline-none focus:ring-0 flex-wrap text-blackk md:text-lg text-md ">
+             className="min-h-[90%]  w-full pt-4 break-words whitespace-pre-wrap whitespace-pre-wrap  focus:outline-none focus:ring-0 flex-wrap text-blackk md:text-lg text-md ">
                 {noteContent}
                 
             </div>
