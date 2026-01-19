@@ -135,7 +135,7 @@ const Note = () => {
                                 <Link to={`/note/${noteItem.id}`} key={noteItem.id}>
                                     <div className="w-full h-[80%] ">
                                         <h1 className="text-[16px] md:text-[24px] mb-2 font-bold line-clamp-1 text-blackk ">{noteItem.name}</h1>
-                                        <p className="text-[12px] md:text-[16px] line-clamp-5 md:line-clamp-3 text-blackk ">{noteItem.note}</p>
+                                        <p className="text-[12px] md:text-[16px] line-clamp-5 md:line-clamp-3 whitespace-pre-wrap text-blackk ">{noteItem.note}</p>
 
                                     </div>
                                 </Link>
