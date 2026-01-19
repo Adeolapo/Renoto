@@ -1,5 +1,11 @@
 import React, { createContext } from "react";
 
+type UserType ={
+    name: string;
+    email: string | null
+    uid: string | null
+    photoURL: string | null
+  }
 
 type ContextType = {
     inputValue: string;
@@ -12,6 +18,8 @@ type ContextType = {
     setNotes: React.Dispatch<React.SetStateAction<string>>;
     label: string;
     setLabel: React.Dispatch<React.SetStateAction<string>>;
+    user: UserType | null;
+    setUser:  React.Dispatch<React.SetStateAction<UserType>>;
   };
 
 

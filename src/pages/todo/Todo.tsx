@@ -2,18 +2,20 @@ import React, { useEffect } from "react";
 import { collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, query, where } from "firebase/firestore"; 
 import {db} from "../../firebase"
 import MyContext from "../../context";
+import Nav from "@/components/nav/Nav";
 
 
 const Todo: React.FC = () => {
 
-    const {inputValue, setInputValue} = React.useContext(MyContext)!;
+    const {inputValue, setInputValue,user} = React.useContext(MyContext)!;
     const [todos, setTodos] = React.useState<Array<{id: string; text: string; isCompleted: boolean}>>([]);
     const [filterState, setFilterState] = React.useState<string>("All");
 
     useEffect(() => {   
-
+        if (!user?.uid) return;
         if (filterState === "Completed"){
-            const q = query(collection(db, "todos"), where("isCompleted", "==", true));
+            
+            const q = query(collection(db, "users", user.uid, "todos"), where("isCompleted", "==", true));
             const unsub = onSnapshot( q, (snapshot) => {
                 const todos = snapshot.docs.map(doc => ({
                     id: doc.id,
@@ -23,7 +25,7 @@ const Todo: React.FC = () => {
             });
             return () => unsub();
         } else if (filterState === "Uncompleted"){
-            const q = query(collection(db, "todos"), where("isCompleted", "==", false));
+            const q = query(collection(db, "users", user.uid, "todos"), where("isCompleted", "==", false));
             const unsub = onSnapshot( q, (snapshot) => {
                 //console.log(snapshot)
                 const todos = snapshot.docs.map(doc => ({
@@ -34,7 +36,7 @@ const Todo: React.FC = () => {
             });
             return () => unsub();
         } else {
-            const unsub = onSnapshot(collection(db, "todos"), (snapshot) => {
+            const unsub = onSnapshot(collection(db, "users", user.uid, "todos"), (snapshot) => {
                 const todos = snapshot.docs.map(doc => ({
                     id: doc.id,
                     ...doc.data()
@@ -55,9 +57,15 @@ const Todo: React.FC = () => {
             
             if(!inputValue)
                 return
+
+            if (!user?.uid) {
+                console.error("User ID is missing");
+                return;
+            }
             else{
                 try {
-                const docRef = await addDoc(collection(db, "todos"), {
+                    //const todosCollectionRef = doc(collection(db, "users", user?.uid, "todos"));
+                const docRef = await addDoc(collection(db,"users", user.uid, "todos"), {
                     isCompleted: false,
                     text: inputValue,
                 });
@@ -78,7 +86,12 @@ const Todo: React.FC = () => {
                         id: deleteField(),   
                 });*/
 
-                  await deleteDoc(doc(db, "todos", id));
+                if (!user?.uid) {
+                    console.error("User ID is missing");
+                    return;
+                }
+
+                  await deleteDoc(doc(db,"users", user!.uid, "todos", id));
         }
 
 
@@ -116,7 +129,8 @@ const Todo: React.FC = () => {
                                     await deleteTodo(todo.id);
                                 }} className="fa-solid fa-xmark text-[20px] text-[#EF4444] cursor-pointer "></i>
                                 <i onClick={async()=>{
-                                    let docRef = doc(db, "todos", todo.id);
+                                    if (!user?.uid) return;
+                                    let docRef = doc(db, "users", user.uid, "todos", todo.id);
                                     await updateDoc(docRef, {
                                             isCompleted: !todo.isCompleted
                                     });
@@ -133,6 +147,7 @@ const Todo: React.FC = () => {
                 </ul> 
             </div>
         </div>
+        <Nav />
     </div>
   );
 };

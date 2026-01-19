@@ -1,7 +1,8 @@
 import { Modal } from "@/components/modal/Modal";
+import MyContext from "@/context";
 import { db } from "@/firebase";
 import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
 import { Link } from "react-router";
 
@@ -11,12 +12,14 @@ const Note = () => {
     const [height, setHeight] = useState<number[]>([]);
     const [filterState, setFilterState] = useState<Array<{id: string; name: string; note: string; color: string, label: string}>>([]);
     const [inputValue, setInputValue] = useState<string>("");
+    const {user} =  useContext(MyContext)!;
 
    
 
     useEffect(()=>{
         function handleResize() {
-            const unsub = onSnapshot(collection(db, "notes"), (doc) => {
+            if (!user?.uid) return;
+            const unsub = onSnapshot(collection(db,"users",user.uid, "notes"), (doc) => {
                const docs = doc.docs.map((doc) => {
                     return { id: doc.id, ...doc.data() };
                 });
@@ -75,8 +78,9 @@ const Note = () => {
 
   
    async function deleteTodo(id: string): Promise<void> {
+            if (!user?.uid) return;
                
-        await deleteDoc(doc(db, "notes", id));
+        await deleteDoc(doc(db,"users", user.uid, "notes", id));
         
     }
 
@@ -105,7 +109,7 @@ const Note = () => {
                     <div className="w-full h-[25vh] md:px-[80px] px-[32px] bg-primaryy rounded-b-[40px] p-4 flex flex-col justify-center  ">
                         <form action="" >
                             <div className="h-[58px] rounded-[40px] bg-secondaryy w-full flex items-center ">
-                                <input onChange={handleInput} type="text" value={inputValue} placeholder="Search for notes" className="h-full w-[70%] md:w-[90%] bg-secondaryy rounded-[40px] px-4  appearance-none outline-none focus:outline-none focus:ring-0 border-none  " />
+                                <input onChange={handleInput} type="text" value={inputValue} placeholder="Search for notes through label" className="h-full w-[70%] md:w-[90%] bg-secondaryy rounded-[40px] px-4  appearance-none outline-none focus:outline-none focus:ring-0 border-none  " />
                                 
                             </div>
         

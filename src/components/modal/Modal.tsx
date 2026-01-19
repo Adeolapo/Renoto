@@ -27,7 +27,7 @@ export const Modal = () =>  {
 
     const [open, setOpen] = React.useState<boolean>(false);  
 
-    const {noteTitle, setNoteTitle, note, setNote,label,setLabel} = useContext(MyContext)!;  
+    const {noteTitle, setNoteTitle, note, setNote,label,setLabel,user} = useContext(MyContext)!;  
     
     function handleNote(e: React.ChangeEvent<HTMLTextAreaElement>) {
         setNote(e.target.value);
@@ -47,7 +47,8 @@ export const Modal = () =>  {
             return;
 
         try {
-           const docRef = await addDoc(collection(db, "notes"), {
+          if (!user?.uid) return;
+           const docRef = await addDoc(collection(db,"users", user.uid, "notes"), {
                 name: noteTitle,
                 note: note,
                 label: label,

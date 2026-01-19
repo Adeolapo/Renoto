@@ -1,8 +1,9 @@
-import {  useEffect, useRef, useState } from "react";
+import {  useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "@/firebase";
  import {updateDoc } from "firebase/firestore";
+import MyContext from "@/context";
 
 
 const Detail = () => {
@@ -16,10 +17,12 @@ const Detail = () => {
     const [newNoteContent, setNewNoteContent] = useState<string>("");
     const ref = useRef<HTMLDivElement>(null);
     const navigate = useNavigate()
+    const {user} = useContext(MyContext)!;
 
     useEffect(() => {
+        if (!user?.uid) return;
 
-        const docRef = doc(db, "notes", id!);
+        const docRef = doc(db, "users", user.uid, "notes", id!);
         if (!id) return;
 
         const unsub = onSnapshot(docRef, (doc) => {
@@ -42,9 +45,9 @@ const Detail = () => {
     }
 
     async function handleEdit() {
-       
+       if (!user?.uid) return;
 
-        const docRef = doc(db, "notes", id!);
+        const docRef = doc(db, "users", user.uid, "notes", id!);
 
         // Set the "capital" field of the city 'DC'
         await updateDoc(docRef, {
